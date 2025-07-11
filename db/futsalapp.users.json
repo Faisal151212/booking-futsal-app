@@ -1,0 +1,24 @@
+[{
+  "_id": {
+    "$oid": "687106f3629f444e0d168aac"
+  },
+  "username": "admin",
+  "password": "12345",
+  "nama": "Admin Utama",
+  "role": "admin",
+  "created": {
+    "$date": "2024-07-12T00:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "68710755629f444e0d168aae"
+  },
+  "username": "faisal",
+  "password": "12345",
+  "nama": "faisal",
+  "role": "user",
+  "created": {
+    "$date": "2024-07-12T09:00:00.000Z"
+  }
+}]

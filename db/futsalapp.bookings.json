@@ -1,0 +1,38 @@
+[{
+  "_id": {
+    "$oid": "6871080e629f444e0d168ab6"
+  },
+  "user": {
+    "$oid": "665fe123a7a88de7d2345e0a"
+  },
+  "lapangan": {
+    "$oid": "665fe34fa7a88de7d2345e0c"
+  },
+  "tanggal": "2024-07-14",
+  "jam_mulai": "14:00",
+  "jam_selesai": "16:00",
+  "status": "approved",
+  "created": {
+    "$date": "2024-07-12T10:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "687109bf7ef6daf897daee68"
+  },
+  "user": {
+    "$oid": "68710755629f444e0d168aae"
+  },
+  "lapangan": {
+    "$oid": "68710798629f444e0d168ab1"
+  },
+  "tanggal": "2025-07-12",
+  "jam_mulai": "20:00",
+  "jam_selesai": "21:00",
+  "status": "cancelled",
+  "catatan": "",
+  "created": {
+    "$date": "2025-07-11T12:55:27.894Z"
+  },
+  "__v": 0
+}]

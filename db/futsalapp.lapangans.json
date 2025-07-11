@@ -1,0 +1,18 @@
+[{
+  "_id": {
+    "$oid": "68710798629f444e0d168ab1"
+  },
+  "nama": "Futsal STB",
+  "lokasi": "JL. Citarik",
+  "harga_per_jam": 120000,
+  "foto": "champion-arena.jpg"
+},
+{
+  "_id": {
+    "$oid": "687107c0629f444e0d168ab3"
+  },
+  "nama": "Futsal JB",
+  "lokasi": "Jl. jababeka 2",
+  "harga_per_jam": 120000,
+  "foto": "champion-arena.jpg"
+}]
