@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin • Data Booking Futsal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(120deg, #23243e 0%, #3587e3 100%);
+      font-family: 'Poppins', Arial, sans-serif;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .sidebar {
+      position: fixed; left:0; top:0; bottom:0; width: 235px;
+      background: #23243c;
+      color: #fff;
+      padding: 36px 14px 0 22px;
+      box-shadow:2px 0 10px #1113;
+      z-index: 99;
+      display: flex; flex-direction: column;
+      min-height: 100vh;
+    }
+    .sidebar h2 {
+      color: #ff9f1c;
+      margin-bottom: 36px;
+      font-weight: 700;
+      font-size: 1.35rem;
+      letter-spacing: 1px;
+    }
+    .admin-nav {
+      display: flex; flex-direction: column; gap: 17px; margin-bottom: 40px;
+    }
+    .admin-nav a {
+      color: #ffdf9e;
+      font-size: 1.07em;
+      text-decoration: none;
+      padding: 9px 18px 9px 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: background 0.15s, color 0.13s;
+      display: flex; align-items: center; gap: 9px;
+    }
+    .admin-nav a.active, .admin-nav a:hover {
+      background: #ff9f1c;
+      color: #fff;
+    }
+    .sidebar .logout-link {
+      color:#ff7b7b;margin-top:auto;font-size:1.08em;text-decoration:none;padding:7px 12px 7px 10px;
+      border-radius:8px;font-weight:600;display:block;transition:background .15s;
+    }
+    .sidebar .logout-link:hover {background:#381e1e;color:#fff;}
+    .main {
+      margin-left: 255px;
+      padding-top: 30px;
+      padding-bottom: 32px;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 18px auto;
+      background: rgba(255,255,255,0.96);
+      border-radius: 22px;
+      box-shadow: 0 10px 38px #1e3c7230, 0 1.5px 12px #2a529855;
+      padding: 38px 36px 56px 36px;
+    }
+    h1 {
+      color: #263a65;
+      font-weight: 800;
+      margin-bottom: 28px;
+      font-size: 2.1rem;
+      letter-spacing: 1.2px;
+      text-align: left;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .search-form {
+      margin-bottom: 22px;
+      display: flex;
+      gap: 13px;
+      align-items: center;
+    }
+    .search-form input {
+      padding: 9px 12px;
+      border: 1.2px solid #b3c9f5;
+      border-radius: 9px;
+      font-size: 1em;
+      outline: none;
+      width: 230px;
+      background: #f5f8ff;
+      transition: border .17s;
+    }
+    .search-form button {
+      background: linear-gradient(90deg,#2a5298 50%,#ffb347 100%);
+      color: #fff;
+      font-weight: 700;
+      border: none;
+      padding: 9px 22px;
+      border-radius: 9px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background .16s, transform .13s;
+    }
+    .search-form button:hover {
+      background: linear-gradient(90deg,#ffb347 20%,#2a5298 100%);
+      transform: scale(1.05);
+    }
+    .table-wrapper {
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 12px;
+      background: transparent;
+      margin-top: 7px;
+    }
+    th, td {
+      padding: 13px 7px;
+      text-align: center;
+      background: #f5f8ff;
+      border-radius: 8px;
+      font-size: 1em;
+      transition: background .18s;
+    }
+    th {
+      background: #263a65;
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: .7px;
+    }
+    tr.booking-row:hover td {
+      background: #e6f0fa;
+      transform: scale(1.01);
+    }
+    .badge-status {
+      padding: 7px 16px;
+      border-radius: 12px;
+      color: #fff;
+      font-weight: 700;
+      font-size: .98em;
+      display: inline-block;
+    }
+    .pending { background: #ffb347; color: #442a09; }
+    .approved { background: #37cc7a; }
+    .cancelled, .rejected { background: #e84c4c; }
+    .update-form {
+      display: flex;
+      gap: 7px;
+      justify-content: center;
+      align-items: center;
+    }
+    .update-form select {
+      border-radius: 7px;
+      border: 1px solid #2a5298;
+      padding: 6px 13px;
+      font-size: 1em;
+      background: #fff;
+    }
+    .update-form button {
+      border: none;
+      background: #2a5298;
+      color: #fff;
+      padding: 6px 13px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .16s;
+    }
+    .update-form button:hover {
+      background: #1e3c72;
+    }
+    .no-data {
+      color: #b9b9b9;
+      font-style: italic;
+      text-align: center;
+      font-size: 1.06em;
+    }
+    @media (max-width:900px) {
+      .sidebar{width:100vw;min-height:auto;position:static;margin-bottom:13px;}
+      .main{margin-left:0;}
+      .container{padding:10px;}
+      th,td{padding:7px 3px;font-size:.93em;}
+    }
+    @media (max-width:700px){
+      .container{padding:14px;}
+      .search-form{flex-direction:column;gap:9px;}
+      th,td{padding:7px 3px;font-size:.93em;}
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar/menu admin -->
+  <div class="sidebar">
+    <h2>Admin Panel</h2>
+    <div class="admin-nav">
+      <a href="/admin/lapangan">🏟️ Data Lapangan</a>
+      <a href="/admin/booking" class="active">📋 Data Booking</a>
+      <!-- Statistik sudah dihapus -->
+    </div>
+    <a href="/logout" class="logout-link">⏏ Logout</a>
+  </div>
+  <div class="main">
+    <div class="container">
+      <h1>📋 Data Booking Futsal</h1>
+      <form class="search-form" method="get" action="/admin/booking">
+        <input type="text" name="q" placeholder="Cari user, lapangan, tanggal..." value="<%= typeof q !== 'undefined' ? q : '' %>">
+        <button type="submit">Cari</button>
+      </form>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nama User</th>
+              <th>Lapangan</th>
+              <th>Tanggal</th>
+              <th>Jam</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if(booking.length === 0) { %>
+              <tr><td colspan="7" class="no-data">Belum ada data booking</td></tr>
+            <% } else { %>
+              <% booking.forEach(function(b, i){ %>
+                <tr class="booking-row">
+                  <td><%= i+1 %></td>
+                  <td>
+                    <%= b.user && b.user.nama ? b.user.nama : '-' %>
+                    <% if(b.user && b.user.username) { %>
+                      <div style="font-size:.93em;color:#888;">@<%= b.user.username %></div>
+                    <% } %>
+                  </td>
+                  <td>
+                    <%= b.lapangan && b.lapangan.nama ? b.lapangan.nama : '-' %>
+                    <% if(b.lapangan && b.lapangan.lokasi) { %>
+                      <div style="font-size:.93em;color:#888;"><%= b.lapangan.lokasi %></div>
+                    <% } %>
+                  </td>
+                  <td><%= b.tanggal %></td>
+                  <td><%= b.jam_mulai %> - <%= b.jam_selesai %></td>
+                  <td>
+                    <% if(b.status === 'approved'){ %>
+                      <span class="badge-status approved">Approved</span>
+                    <% } else if(b.status === 'cancelled' || b.status === 'rejected'){ %>
+                      <span class="badge-status cancelled">Cancelled</span>
+                    <% } else { %>
+                      <span class="badge-status pending">Pending</span>
+                    <% } %>
+                  </td>
+                  <td>
+                    <form class="update-form" method="post" action="/admin/booking/<%= b._id %>/status">
+                      <select name="status">
+                        <option value="pending" <%= b.status==='pending' ? 'selected' : '' %>>Pending</option>
+                        <option value="approved" <%= b.status==='approved' ? 'selected' : '' %>>Approved</option>
+                        <option value="cancelled" <%= b.status==='cancelled' ? 'selected' : '' %>>Cancelled</option>
+                        <option value="rejected" <%= b.status==='rejected' ? 'selected' : '' %>>Rejected</option>
+                      </select>
+                      <button type="submit">Update</button>
+                    </form>
+                  </td>
+                </tr>
+              <% }) %>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

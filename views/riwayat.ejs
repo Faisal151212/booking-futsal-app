@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Riwayat Booking | Booking Futsal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    body {
+      background: linear-gradient(120deg, #43d8c9 0%, #283655 100%);
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Poppins', Arial, sans-serif;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 900px;
+      margin: 48px auto 0 auto;
+      background: #fff;
+      border-radius: 26px;
+      box-shadow: 0 10px 38px #43d8c966, 0 1.5px 12px #28365533;
+      padding: 38px 34px 42px 34px;
+      color: #23243c;
+      min-height: 440px;
+    }
+    .judul-riwayat {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #43d8c9;
+      margin-bottom: 23px;
+      letter-spacing: 2px;
+      text-shadow: 0 3px 16px #b7e3ff36;
+    }
+    .riwayat-table-wrapper {
+      overflow-x: auto;
+    }
+    table.riwayat-booking {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 14px;
+      margin-top: 15px;
+      background: transparent;
+      font-size: 1.01em;
+    }
+    table.riwayat-booking th {
+      background: #43d8c9;
+      color: #fff;
+      font-weight: 700;
+      padding: 13px 0;
+      border: none;
+      border-radius: 10px 10px 0 0;
+      box-shadow: 0 2px 8px #43d8c955;
+      letter-spacing: 1px;
+      text-align: center;
+    }
+    table.riwayat-booking td {
+      background: #f3f7fd;
+      color: #23243c;
+      text-align: center;
+      border-radius: 0 0 10px 10px;
+      padding: 13px 7px;
+      box-shadow: 0 6px 14px #43d8c933;
+      transition: transform 0.23s cubic-bezier(.14,.87,.59,.95);
+    }
+    table.riwayat-booking tr:hover td {
+      background: #e8f8ff;
+      transform: translateY(-2px) scale(1.01);
+    }
+    .badge {
+      display: inline-block;
+      border-radius: 11px;
+      padding: 5px 13px;
+      font-size: .99em;
+      font-weight: 700;
+      color: #fff;
+      margin: 0 auto;
+      letter-spacing: 1px;
+    }
+    .badge-pending { background: linear-gradient(90deg,#f9cb40 60%,#43d8c9 100%); color: #2a2a2a;}
+    .badge-approved { background: linear-gradient(90deg,#43d8c9 60%,#30b87c 100%);}
+    .badge-rejected { background: linear-gradient(90deg,#ff7b7b 60%,#ee5c5c 100%);}
+    .badge-complete { background: linear-gradient(90deg,#283655 60%,#43d8c9 100%);}
+    .no-history {
+      color: #a5a5ad;
+      text-align: center;
+      font-style: italic;
+      font-size: 1.07rem;
+      padding: 30px 0;
+    }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 18px;
+      color: #43d8c9;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: 1.2px;
+      transition: color .16s;
+      font-size: 1.02em;
+    }
+    .back-link:hover { color: #283655; }
+    @media (max-width:600px){
+      .container{padding:12px;}
+      table.riwayat-booking th, table.riwayat-booking td{font-size:.97em;}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">&#8592; Kembali ke Dashboard</a>
+    <div class="judul-riwayat">Riwayat Booking Futsal</div>
+    <div class="riwayat-table-wrapper">
+      <table class="riwayat-booking">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Lapangan</th>
+            <th>Tanggal</th>
+            <th>Jam</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (!riwayat || riwayat.length === 0) { %>
+            <tr>
+              <td colspan="5" class="no-history">Belum ada booking yang tercatat.</td>
+            </tr>
+          <% } else { %>
+            <% riwayat.forEach(function(item, i) { %>
+              <tr>
+                <td><%= i+1 %></td>
+                <td>
+                  <%= item.lapangan && item.lapangan.nama ? item.lapangan.nama : '-' %><br>
+                  <span style="color:#aaa; font-size:.93em;">
+                    <%= item.lapangan && item.lapangan.lokasi ? item.lapangan.lokasi : '' %>
+                  </span>
+                </td>
+                <td><%= item.tanggal ? (new Date(item.tanggal).toLocaleDateString('id-ID')) : '-' %></td>
+                <td>
+                  <%= item.jam_mulai %> - <%= item.jam_selesai %> WIB
+                </td>
+                <td>
+                  <% 
+                    let s = (item.status || 'pending').toLowerCase();
+                    let stxt = {pending:'Menunggu',approved:'Disetujui',rejected:'Ditolak',complete:'Selesai'}[s]||s;
+                    let sbg = {
+                      pending:'badge-pending', 
+                      approved:'badge-approved', 
+                      rejected:'badge-rejected',
+                      complete:'badge-complete'
+                    }[s]||'badge-pending';
+                  %>
+                  <span class="badge <%= sbg %>"><%= stxt %></span>
+                </td>
+              </tr>
+            <% }); %>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:26px;font-size:.97em;color:#aaa;text-align:center;">
+      Data ditampilkan <b>terbaru</b> di atas &mdash; update otomatis setelah booking.
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin • Data Lapangan Futsal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(120deg, #23243e 0%, #3587e3 100%);
+      font-family: 'Poppins', Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+    }
+    .sidebar {
+      position: fixed; left:0; top:0; bottom:0; width: 235px;
+      background: #23243c;
+      color: #fff;
+      padding: 36px 14px 0 22px;
+      box-shadow:2px 0 10px #1113;
+      z-index: 99;
+      display: flex; flex-direction: column;
+      min-height: 100vh;
+    }
+    .sidebar h2 {
+      color: #ff9f1c;
+      margin-bottom: 36px;
+      font-weight: 700;
+      font-size: 1.35rem;
+      letter-spacing: 1px;
+    }
+    .admin-nav {
+      display: flex; flex-direction: column; gap: 17px; margin-bottom: 40px;
+    }
+    .admin-nav a {
+      color: #ffdf9e;
+      font-size: 1.07em;
+      text-decoration: none;
+      padding: 9px 18px 9px 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: background 0.15s, color 0.13s;
+      display: flex; align-items: center; gap: 9px;
+    }
+    .admin-nav a.active, .admin-nav a:hover {
+      background: #ff9f1c;
+      color: #fff;
+    }
+    .sidebar .logout-link {
+      color:#ff7b7b;margin-top:auto;font-size:1.08em;text-decoration:none;padding:7px 12px 7px 10px;
+      border-radius:8px;font-weight:600;display:block;transition:background .15s;
+    }
+    .sidebar .logout-link:hover {background:#381e1e;color:#fff;}
+    .main {
+      margin-left: 255px;
+      padding-top: 20px;
+      padding-bottom: 32px;
+      min-height: 100vh;
+      width: 100%;
+    }
+    .container {
+      max-width: 900px;
+      margin: 18px auto;
+      background: rgba(255,255,255,0.97);
+      border-radius: 22px;
+      box-shadow: 0 10px 38px #1e3c7230, 0 1.5px 12px #2a529855;
+      padding: 36px 32px 46px 32px;
+    }
+    h1 {
+      color: #263a65;
+      font-weight: 800;
+      margin-bottom: 30px;
+      font-size: 2rem;
+      letter-spacing: 1.3px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .add-lapangan-btn {
+      display: inline-block;
+      background: linear-gradient(90deg,#2a5298 50%,#ffb347 100%);
+      color: #fff;
+      font-weight: 700;
+      border: none;
+      padding: 11px 27px;
+      border-radius: 10px;
+      font-size: 1.07em;
+      cursor: pointer;
+      margin-bottom: 21px;
+      text-decoration: none;
+      box-shadow: 0 4px 18px #2a52986c;
+      transition: background .15s, transform .13s;
+    }
+    .add-lapangan-btn:hover {
+      background: linear-gradient(90deg,#ffb347 20%,#2a5298 100%);
+      transform: scale(1.06);
+    }
+    .table-wrapper { overflow-x: auto; }
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 12px;
+      margin-top: 7px;
+      background: transparent;
+    }
+    th, td {
+      padding: 13px 6px;
+      text-align: center;
+      background: #f5f8ff;
+      border-radius: 8px;
+      font-size: 1em;
+      transition: background .16s;
+    }
+    th {
+      background: #263a65;
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: .8px;
+    }
+    tr.lapangan-row:hover td {
+      background: #e6f0fa;
+      transform: scale(1.01);
+    }
+    .foto-lapangan {
+      max-width: 90px;
+      max-height: 60px;
+      border-radius: 10px;
+      box-shadow: 0 3px 12px #2a52983b;
+      margin: 0 auto;
+      display: block;
+    }
+    .aksi-btn {
+      padding: 7px 18px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      margin: 1px 4px;
+      font-size: .97em;
+      cursor: pointer;
+      transition: background .13s, transform .12s;
+    }
+    .edit-btn {
+      background: linear-gradient(90deg,#43d8c9 40%, #2a5298 100%);
+      color: #1e365a;
+    }
+    .edit-btn:hover { background: linear-gradient(90deg,#2a5298 30%, #43d8c9 100%);}
+    .del-btn {
+      background: linear-gradient(90deg,#e84c4c 60%, #ffb347 100%);
+      color: #fff;
+    }
+    .del-btn:hover { background: linear-gradient(90deg,#ffb347 10%,#e84c4c 100%);}
+    .no-data {
+      color: #b9b9b9;
+      font-style: italic;
+      text-align: center;
+      font-size: 1.06em;
+    }
+    @media (max-width:900px) {
+      .sidebar{width:100vw;min-height:auto;position:static;margin-bottom:13px;}
+      .main{margin-left:0;}
+      .container{padding:10px;}
+      th,td{padding:7px 3px;font-size:.93em;}
+      .foto-lapangan{max-width:55px;}
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar/menu admin -->
+  <div class="sidebar">
+    <h2>Admin Panel</h2>
+    <div class="admin-nav">
+      <a href="/admin/lapangan" class="active">🏟️ Data Lapangan</a>
+      <a href="/admin/booking">📋 Data Booking</a>
+      <!-- Statistik dihapus, tidak ada menu statistik -->
+    </div>
+    <a href="/logout" class="logout-link">⏏ Logout</a>
+  </div>
+  <div class="main">
+    <div class="container">
+      <h1>🏟️ Data Lapangan Futsal</h1>
+      <a href="/admin/lapangan/add" class="add-lapangan-btn">➕ Tambah Lapangan</a>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Foto</th>
+              <th>Nama</th>
+              <th>Lokasi</th>
+              <th>Harga/Jam</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+          <% if(lapangan.length === 0) { %>
+            <tr><td colspan="6" class="no-data">Belum ada data lapangan</td></tr>
+          <% } else { %>
+            <% lapangan.forEach(function(l, i){ %>
+              <tr class="lapangan-row">
+                <td><%= i+1 %></td>
+                <td>
+                  <% if(l.foto) { %>
+                    <img src="/uploads/<%= l.foto %>" alt="Lapangan" class="foto-lapangan">
+                  <% } else { %>
+                    <span style="color:#aaa;">(no img)</span>
+                  <% } %>
+                </td>
+                <td><%= l.nama %></td>
+                <td><%= l.lokasi %></td>
+                <td>Rp<%= l.harga_per_jam.toLocaleString('id-ID') %></td>
+                <td>
+                  <a href="/admin/lapangan/edit/<%= l._id %>" class="aksi-btn edit-btn">Edit</a>
+                  <form action="/admin/lapangan/delete/<%= l._id %>" method="POST" style="display:inline;" onsubmit="return confirm('Hapus lapangan ini?')">
+                    <button type="submit" class="aksi-btn del-btn">Hapus</button>
+                  </form>
+                </td>
+              </tr>
+            <% }) %>
+          <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

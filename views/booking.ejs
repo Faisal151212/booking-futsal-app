@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Booking Lapangan • <%= lapangan.nama %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(120deg, #283655 0%, #43d8c9 100%);
+      min-height: 100vh;
+      font-family: 'Poppins', Arial, sans-serif;
+      margin: 0;
+      color: #23243c;
+    }
+    .container {
+      background: #fff;
+      max-width: 440px;
+      margin: 44px auto;
+      border-radius: 22px;
+      box-shadow: 0 8px 30px #43d8c944;
+      padding: 36px 38px 30px 38px;
+      position: relative;
+    }
+    .lapangan-info {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .lapangan-info img {
+      max-width: 180px;
+      max-height: 120px;
+      border-radius: 18px;
+      box-shadow: 0 6px 22px #43d8c930;
+      margin-bottom: 15px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .lapangan-info h2 {
+      margin: 0;
+      font-size: 1.4em;
+      font-weight: 700;
+      color: #283655;
+      letter-spacing: 1px;
+    }
+    .lapangan-info .lokasi {
+      color: #3d8ec6;
+      font-size: .99em;
+      margin-bottom: 8px;
+      margin-top: 2px;
+    }
+    .lapangan-info .harga {
+      font-size: 1.06em;
+      color: #43d8c9;
+      font-weight: 700;
+    }
+    .booking-title {
+      color: #283655;
+      font-size: 1.13em;
+      margin-bottom: 13px;
+      font-weight: 600;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+    .input-group {
+      margin-bottom: 17px;
+      display: flex;
+      flex-direction: column;
+    }
+    .input-group label {
+      font-weight: 600;
+      color: #283655;
+      margin-bottom: 6px;
+      letter-spacing: .1px;
+    }
+    .input-group input, .input-group select {
+      border-radius: 9px;
+      border: 1.8px solid #d4d7ff;
+      padding: 12px 13px;
+      font-size: 1.06rem;
+      background: #f5f6ff;
+      margin-bottom: 2px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .input-group input:focus, .input-group select:focus {
+      border-color: #43d8c9;
+      outline: none;
+      box-shadow: 0 2px 10px #43d8c921;
+    }
+    .btn-booking {
+      width: 100%;
+      padding: 13px 0;
+      background: linear-gradient(90deg, #43d8c9 40%, #283655 100%);
+      color: #fff;
+      font-size: 1.09rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 13px;
+      box-shadow: 0 4px 18px #43d8c945;
+      cursor: pointer;
+      margin-top: 10px;
+      letter-spacing: 1px;
+      transition: background 0.21s, box-shadow 0.18s, transform 0.17s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .btn-booking:hover {
+      background: linear-gradient(90deg, #283655 40%, #43d8c9 100%);
+      box-shadow: 0 8px 26px #43d8c969;
+      transform: scale(1.04) translateY(-2px);
+    }
+    .msg-error {
+      background: #ffbcbc;
+      color: #9a2c2c;
+      border-radius: 9px;
+      padding: 9px 10px;
+      text-align: center;
+      margin-bottom: 18px;
+      font-size: 1em;
+      letter-spacing: .5px;
+    }
+    .kembali-btn {
+      display: inline-block;
+      background: #e2e8f0;
+      color: #283655;
+      padding: 7px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      margin-top: 12px;
+      font-size: .99em;
+      font-weight: 600;
+      border: none;
+      transition: background .14s;
+    }
+    .kembali-btn:hover { background: #43d8c910; color: #3587e3;}
+    @media (max-width:500px){.container{padding:13px;}}
+  </style>
+  <script>
+    function setJamSelesaiMin() {
+      const mulai = document.getElementById('jam_mulai');
+      const selesai = document.getElementById('jam_selesai');
+      selesai.min = mulai.value;
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div class="lapangan-info">
+      <% if (lapangan.foto) { %>
+        <img src="/uploads/<%= lapangan.foto %>" alt="Foto Lapangan">
+      <% } %>
+      <h2><%= lapangan.nama %></h2>
+      <div class="lokasi">📍 <%= lapangan.lokasi %></div>
+      <div class="harga">Rp <%= lapangan.harga_per_jam.toLocaleString('id-ID') %> / jam</div>
+    </div>
+    <div class="booking-title">Form Booking Lapangan</div>
+    <% if (error) { %>
+      <div class="msg-error"><%= error %></div>
+    <% } %>
+    <form method="post" autocomplete="off">
+      <div class="input-group">
+        <label>Tanggal Main</label>
+        <input type="date" name="tanggal" min="<%= new Date().toISOString().split('T')[0] %>" required>
+      </div>
+      <div class="input-group">
+        <label>Jam Mulai</label>
+        <input type="time" name="jam_mulai" id="jam_mulai" required onchange="setJamSelesaiMin()">
+      </div>
+      <div class="input-group">
+        <label>Jam Selesai</label>
+        <input type="time" name="jam_selesai" id="jam_selesai" required>
+      </div>
+      <button class="btn-booking" type="submit">Booking Sekarang</button>
+    </form>
+    <a href="/" class="kembali-btn">← Kembali ke Dashboard</a>
+  </div>
+</body>
+</html>

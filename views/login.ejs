@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Login • Booking Futsal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;400&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(120deg, #1e3c72 0%, #2a5298 100%);
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Poppins', Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .login-container {
+      background: rgba(255,255,255,0.96);
+      padding: 40px 32px 32px 32px;
+      border-radius: 20px;
+      box-shadow: 0 10px 38px #1e3c7235, 0 1.5px 12px #2a529855;
+      width: 370px;
+      max-width: 96vw;
+      animation: pop-in .8s cubic-bezier(.32,2,.55,.27);
+    }
+    @keyframes pop-in {
+      0% { transform: scale(.92) translateY(32px); opacity: 0;}
+      100% { transform: scale(1) translateY(0); opacity: 1;}
+    }
+    .login-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #2a5298;
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+      text-align: center;
+    }
+    .login-desc {
+      color: #4d648d;
+      font-size: 1.08em;
+      text-align: center;
+      margin-bottom: 22px;
+    }
+    .input-group {
+      margin-bottom: 18px;
+    }
+    .input-group label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: #1e3c72;
+    }
+    .input-group input {
+      width: 100%;
+      padding: 11px 12px;
+      border-radius: 8px;
+      border: 1.2px solid #adc6f7;
+      font-size: 1rem;
+      background: #f5f8ff;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .input-group input:focus {
+      border-color: #2a5298;
+    }
+    .btn-login {
+      width: 100%;
+      background: linear-gradient(90deg,#1e3c72 50%,#ffb347 100%);
+      color: #fff;
+      font-size: 1.17rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 10px;
+      padding: 11px 0;
+      margin-top: 10px;
+      cursor: pointer;
+      transition: box-shadow .18s, transform .15s;
+      box-shadow: 0 3px 12px #1e3c7217;
+    }
+    .btn-login:hover {
+      box-shadow: 0 5px 24px #1e3c7226;
+      transform: translateY(-1px) scale(1.03);
+    }
+    .register-link {
+      display: block;
+      text-align: center;
+      margin-top: 23px;
+      color: #1e3c72;
+      font-size: 1em;
+    }
+    .register-link a {
+      color: #2a5298;
+      text-decoration: none;
+      font-weight: 700;
+      transition: color .17s;
+    }
+    .register-link a:hover {
+      color: #ffb347;
+    }
+    .alert-error {
+      background: #ffbcbc;
+      color: #b42020;
+      text-align: center;
+      padding: 9px 13px;
+      margin-bottom: 17px;
+      border-radius: 8px;
+      font-size: .99em;
+      border: 1px solid #ffc7c7;
+    }
+    @media (max-width: 500px){
+      .login-container{padding:22px 6vw 22px 6vw;}
+    }
+  </style>
+</head>
+<body>
+  <form class="login-container" method="POST" action="/login" autocomplete="off">
+    <div class="login-title">Masuk Futsal</div>
+    <div class="login-desc">Silakan login untuk booking lapangan futsal favoritmu!</div>
+    <% if(error) { %>
+      <div class="alert-error"><%= error %></div>
+    <% } %>
+    <div class="input-group">
+      <label for="username">Username</label>
+      <input id="username" type="text" name="username" required autofocus autocomplete="username">
+    </div>
+    <div class="input-group">
+      <label for="password">Password</label>
+      <input id="password" type="password" name="password" required autocomplete="current-password">
+    </div>
+    <button type="submit" class="btn-login">Login</button>
+    <div class="register-link">
+      Belum punya akun? <a href="/register">Daftar sekarang</a>
+    </div>
+  </form>
+</body>
+</html>
